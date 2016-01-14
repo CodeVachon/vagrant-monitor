@@ -29,7 +29,7 @@ app.set('view engine', 'jade');
 
 app.set("title", pkg.name || "No Title Set");
 app.set("cssFiles", ["/css/"+pkg.name+".min.css"]);
-app.set("jsFiles", ["/js/bootstrap.min.js", "/js/"+pkg.name+".min.js"]);
+app.set("jsFiles", ["//code.jquery.com/jquery-1.12.0.min.js", "/js/bootstrap.min.js", "/js/"+pkg.name+".min.js"]);
 app.set('json spaces', 4);
 
 /**

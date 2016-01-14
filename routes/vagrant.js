@@ -1,6 +1,7 @@
 var express = require('express'),
     router = express.Router(),
-    sh = require('exec-sh')
+    sh = require('exec-sh'),
+    cache = {}
 ;
 
 router.param("id", function(request, respose, next, id) {
@@ -22,13 +23,15 @@ router.route('/global-status')
             _parsedstdout.forEach(function(record) {
                 if (/^[a-f0-9]{7}/i.test(record)) {
                     var _thisSplitRecord = record.split(/\s{1,}/);
-                    _parsedResponse.push({
+                    var _thisDataObject = {
                         id: _thisSplitRecord[0],
                         name: _thisSplitRecord[1],
                         provider: _thisSplitRecord[2],
                         state: _thisSplitRecord[3],
                         directory: _thisSplitRecord[4]
-                    });
+                    };
+                    _parsedResponse.push(_thisDataObject);
+                    cache[_thisSplitRecord[0]] = _thisDataObject;
                 }
             });
             response.json(_parsedResponse);
@@ -51,7 +54,8 @@ router.route('/status/:id')
                         id: request.params.id,
                         name: _thisSplitRecord[0],
                         state: _thisSplitRecord[1],
-                        provider: _thisSplitRecord[2].replace(/[\(\)]/g,"")
+                        provider: _thisSplitRecord[2].replace(/[\(\)]/g,""),
+                        directory: cache[request.params.id].directory || "n/a"
                     });
                 }
             });

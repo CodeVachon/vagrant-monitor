@@ -1,4 +1,31 @@
 extends _layout
 
 block content
-    h1 Hello World!
+    table#GlobalStatus.table
+        thead
+            tr
+                th id
+                th name
+                th provider
+                th state
+                th directory
+                th
+        tfoot
+            tr
+                td(colspan='6')
+                    .btn-group
+                        button.btn.btn-default#ReloadBtn Reload
+        tbody
+            tr
+                td(colspan='6') Loading...
+    #Log.modal.fade
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button(data-dismiss="modal").close
+                        span &times;
+                    h4.modal-title Console Log
+                .modal-body
+                    pre.well#logdata
+                .modal-footer
+                    button(data-dismiss="modal").btn.btn-default Close
